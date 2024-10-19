@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let num_row;
     let p5Instance = null;
     let clicked = false;
-    let streams = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge"><title>Document</title><link rel="stylesheet" href="styles.css"></head><body><div id="container"><div id="brain"></div></div><script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script><script src="scripts.js"></script></body></html> let img;let rectY=[];let rectX=[];function preload(){img=loadImage('assets/images/brain-right.jpg');}function setup(){let brain=document.getElementById("brain");let canvas=createCanvas(brain.offsetWidth,brain.offsetHeight);canvas.parent('brain');frameRate(2);img.resize(width,height);}function draw(){background('#e5e5e5');image(img,0,0,width,height);drawMosaic(3,color(50,50,50));}const co0lumnWidth=(rad)=>rad*2+2;const numberOfColumns=(rad)0=00>Math011000.ceil(11w10001011000idth/columnWidth(rad))0011001001110;000010101011111000000111010001111110100101011000011100100011111100001011001000010010100100101001100111100001000101101000001110100001001110101100001111011010000101010100100000000000000000000000`;
+    let streams = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge"><title>Document</title><link rel="stylesheet" href="styles.css"></head><body><div id="container"><div id="brain"></div></script><script src="scripts.js"></script></body></html> let img;let rectY=[];let rectX=[];function preload(){img=loadImage('assets/images/brain-right.jpg');}function setup(){let brain=document.getElementById("brain");let canvas=createCanvas(brain.offsetWidth,brain.offsetHeight);canvas.parent('brain');frameRate(2);img.resdraw(){background('#e5e5e5');image(img,0,0,width,height);drawMosaic(3,color(50,50,5rad)=>rad*2+2;const numberOfColumns=(rad)0=00>Math011000.ceil(11w10001011000idth/columnWidth(rad))0011001001110;00001010101111100000011101000111111010010101100001110010011010000100111010110000111101101000010101010010000`;
     let thoughts = ["hello", "am i", "a", "red", "to the left", "i can", "see", "no", "be quiet", "sorry?", "what tennis players?"];
     let letters = [];
     let maxLetters = 8;
@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function () {
             this.y = p.random(p.height);
             this.alpha = 0; 
             this.size = p.random(16, 32);
-            this.fadeSpeed = p.random(0.5, 2);
+            this.fadeSpeed = p.random(1, 3);
             this.fadingIn = true; 
         }
     
