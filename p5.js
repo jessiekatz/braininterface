@@ -6,9 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
     let p5Instance = null;
     let clicked = false;
     let streams = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge"><title>Document</title><link rel="stylesheet" href="styles.css"></head><body><div id="container"><div id="brain"></div></div><script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script><script src="scripts.js"></script></body></html> let img;let rectY=[];let rectX=[];function preload(){img=loadImage('assets/images/brain-right.jpg');}function setup(){let brain=document.getElementById("brain");let canvas=createCanvas(brain.offsetWidth,brain.offsetHeight);canvas.parent('brain');frameRate(2);img.resize(width,height);}function draw(){background('#e5e5e5');image(img,0,0,width,height);drawMosaic(3,color(50,50,50));}const co0lumnWidth=(rad)=>rad*2+2;const numberOfColumns=(rad)0=00>Math011000.ceil(11w10001011000idth/columnWidth(rad))0011001001110;000010101011111000000111010001111110100101011000011100100011111100001011001000010010100100101001100111100001000101101000001110100001001110101100001111011010000101010100100000000000000000000000`;
-let thoughts = ["hello", "am i", "a", "yes the viewing is"];
-let letters = [];
-let maxLetters = 20; // Max number of substrings on the screen at once
+    let thoughts = ["hello", "am i", "a", "red", "to the left", "i can", "see", "no", "be quiet", "sorry?", "what tennis players?"];
+    let letters = [];
+    let maxLetters = 8;
 
     function setupSketch(id) {
         const canvasParent = document.getElementById(id);
@@ -32,6 +32,23 @@ let maxLetters = 20; // Max number of substrings on the screen at once
         num_row = p.floor(p.height / pix_size);
         restart(p);
         p.frameRate(15);
+
+        p.textSize(24);
+        p.textFont("VT323")
+        p.stroke(0);
+        p.textAlign(p.CENTER, p.CENTER);
+        p.fill(0);
+
+        for (let i = 0; i < maxLetters; i++) {
+            let rand = p.random(0, 1);
+            if (rand > 0.5) {
+                letters.push(new FadingText(getRandomStreamSubstring(), p));
+            } else {
+                let randIndex = Math.floor(p.random(thoughts.length)); 
+                letters.push(new FadingText(thoughts[randIndex], p));
+            }
+        }
+        
     }
 
     function restart(p) {
@@ -47,10 +64,10 @@ let maxLetters = 20; // Max number of substrings on the screen at once
     }
 
     function draw(p) {
-        if (clicked == false) {
-            p.background(255,242,245);
+        if (!clicked) {
+            p.background(255, 242, 245);
         } else {
-            p.background(255, 227,245);
+            p.background(255, 227, 245);
             for (let c = 0; c < num_col; c++) {
                 for (let r = 0; r < num_row; r++) {
                     pix_arr[c][r].getnextPat(p);
@@ -61,25 +78,29 @@ let maxLetters = 20; // Max number of substrings on the screen at once
                     pix_arr[c][r].draw_pix(p);
                 }
             }
-        } 
 
-        for (let i = 0; i < letters.length; i++) {
-            letters[i].display();
-            letters[i].update();
-          }
+            for (let i = 0; i < letters.length; i++) {
+                letters[i].display(p);
+                letters[i].update(p);
+            }
+        }
     }
+
     function onClick() {
         const myButton = document.getElementById('switch');
-    
-        myButton.addEventListener('click', function(event) {
-            
-            clicked=true;
+        myButton.addEventListener('click', function() {
+            clicked = true;
         });
     }
     
     window.onload = onClick;
-    
     onClick();
+
+    function getRandomStreamSubstring() {
+        let startIdx = Math.floor(Math.random() * streams.length);
+        let length = Math.floor(Math.random() * (25 - 5 + 1)) + 5;
+        return streams.substring(startIdx, startIdx + length);
+    }
 
     function getNeighborhood(p) {
         for (let c = 0; c < num_col; c++) {
@@ -120,10 +141,9 @@ let maxLetters = 20; // Max number of substrings on the screen at once
             for (let i = 0; i < this.neighbor.length; i++) {
                 total += this.neighbor[i].pat;
             }
-            let average = p.int(total / 8);
+            let average = Math.floor(total / 8);
             let d = p.dist(p.mouseX, p.mouseY, this.x + pix_size / 2, this.y + pix_size / 2);
             if (d < 20) {
-                // Color change value
                 this.nextPat = 250; 
             } else if (average === 0) {
                 this.nextPat = 150;
@@ -144,10 +164,48 @@ let maxLetters = 20; // Max number of substrings on the screen at once
         draw_pix(p) {
             p.noStroke();
             this.pat = this.nextPat;
-            p.fill(233,250,230, this.pat);
+            p.fill(233, 250, 230, this.pat);
             p.rect(this.x, this.y, pix_size * 1.75, pix_size * 1.75);
         }
     }
+
+    class FadingText {
+        constructor(text, p) {
+            this.text = text;
+            this.x = p.random(p.width);
+            this.y = p.random(p.height);
+            this.alpha = 0; 
+            this.size = p.random(16, 32);
+            this.fadeSpeed = p.random(0.5, 2);
+            this.fadingIn = true; 
+        }
+    
+        display(p) {
+            p.fill(0, this.alpha);
+            p.textSize(this.size);
+            p.text(this.text, this.x, this.y);
+        }
+    
+        update(p) {
+            if (this.fadingIn) {
+                this.alpha += this.fadeSpeed;
+                if (this.alpha >= 150) { 
+                    this.fadingIn = false;
+                }
+            } else {
+                this.alpha -= this.fadeSpeed;
+                if (this.alpha <= 0) {  
+                    this.alpha = 0;
+                    this.fadingIn = true;
+                    this.x = p.random(p.width);
+                    this.y = p.random(p.height);
+                    this.text = getRandomStreamSubstring();
+                    this.size = p.random(12,16);
+                }
+            }
+        }
+    }
+    
 
     setupSketch("page");
 
@@ -157,33 +215,3 @@ let maxLetters = 20; // Max number of substrings on the screen at once
         }
     }
 });
-
-
-class FadingText {
-    constructor(text) {
-      this.text = text;
-      this.x = random(width);
-      this.y = random(height);
-      this.alpha = random(50, 150);
-      this.size = random(16, 32);
-      this.fadeSpeed = random(0.5, 2);
-      this.lifetime = random(50, 200); 
-    }
-    
-    display() {
-      fill(0, this.alpha); 
-      textSize(this.size);
-      text(this.text, this.x, this.y);
-    }
-    
-    update() {
-      this.alpha -= this.fadeSpeed;
-      if (this.alpha < 0) {
-        this.alpha = random(50, 150); 
-        this.x = random(width); 
-        this.y = random(height);
-        this.text = random(streams.substring(0, 100)) + " " + random(thoughts); 
-        this.size = random(16, 32); 
-      }
-    }
-  }
