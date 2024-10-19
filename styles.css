@@ -2,7 +2,7 @@ body, html {
     padding: 0;
     margin: 0;
     overflow-x: hidden;
-    height: 100%; /* Ensure body and html take full height */
+    height: 100%; 
 }
 
 #container {
@@ -12,31 +12,31 @@ body, html {
     position: absolute;
     z-index: 2;
     width: 100%;
-    height: 100vh; /* Use viewport height for full responsiveness */
+    height: 100vh; 
 }
 
 #brain {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 26%; /* Use percentage for width to make it responsive */
-    height: 36%; /* Use percentage for height */
+    width: 26%; 
+    height: 36%;
 }
 
 #switch {
     position: absolute;
     right: 0;
-    width: 20%; /* Use percentage for width */
-    max-width: 130px; /* Optional: Set a max width */
-    height: 30%; /* Use percentage for height */
-    max-height: 300px; /* Optional: Set a max height */
+    width: 20%; 
+    max-width: 130px; 
+    height: 30%; 
+    max-height: 300px; 
     z-index: 3;
-    margin: 5em; /* Consider using relative units for margin */
+    margin: 5em; 
 }
 
 #page {
     width: 100%;
-    height: 100vh; /* Ensure full height of the viewport */
+    height: 100vh;
     position: relative;
     margin: 0;
     padding: 0;
@@ -50,11 +50,4 @@ body, html {
     z-index: -1;
     top: 25%; 
     left: 25%; 
-}
-
-#text p {
-    white-space: pre-wrap; /* Preserve formatting and break lines as needed */
-    word-wrap: break-word; /* Break long words if necessary */
-    word-break: break-all; /* Break words at arbitrary points if too long */
-    overflow-wrap: break-word; /* Handle unbreakable content */
 }
