@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     function draw(p) {
         if (!clicked) {
-            p.background(255, 242, 245);
+            p.background(248, 229, 242);
         } else {
             p.background(255, 227, 245);
             for (let c = 0; c < num_col; c++) {
